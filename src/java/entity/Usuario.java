@@ -8,31 +8,31 @@
 package entity;
 
 public class Usuario extends Persona{
-    private String codigo;
+    private int codigo;
     private String nombreUsuario;
     private String contraseña;
 
     public Usuario() {
     }
 
-    public Usuario(String codigo, String nombreUsuario, String contraseña, String nombre, String sexo, int edad) {
+    public Usuario(int codigo, String nombreUsuario, String contraseña, String nombre, String sexo, int edad) {
         super(nombre, sexo, edad);
+        this.codigo=codigo;
+        this.nombreUsuario = nombreUsuario;
+        this.contraseña = contraseña;
+    }
+
+    public Usuario(int codigo, String nombreUsuario, String contraseña) {
         this.codigo = codigo;
         this.nombreUsuario = nombreUsuario;
         this.contraseña = contraseña;
     }
 
-    public Usuario(String codigo, String nombreUsuario, String contraseña) {
-        this.codigo = codigo;
-        this.nombreUsuario = nombreUsuario;
-        this.contraseña = contraseña;
-    }
-
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 

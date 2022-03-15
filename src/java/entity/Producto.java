@@ -96,21 +96,21 @@ public class Producto {
         u1.setEdad(18);
         u1.setNombre("Juan");
         u1.setSexo("Masculino");
-        u1.setCodigo("1x");
+        u1.setCodigo(1);
         u1.setContraseña("1x1");
         u1.setNombreUsuario("user1");
 
         u2.setEdad(25);
         u2.setNombre("Mariana");
         u2.setSexo("Femenino");
-        u2.setCodigo("2x");
+        u2.setCodigo(2);
         u2.setContraseña("2x2");
         u2.setNombreUsuario("user2");
 
         u3.setEdad(18);
         u3.setNombre("Diana");
         u3.setSexo("Femenino");
-        u3.setCodigo("3x");
+        u3.setCodigo(3);
         u3.setContraseña("3x3");
         u3.setNombreUsuario("user3");
 
