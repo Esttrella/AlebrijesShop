@@ -48,7 +48,7 @@ public class UsuarioModelImpl implements IUsuarioModel {
             conexion = new Conexion();
             conexion.Conectar();
             connection = conexion.getConection();
-            String sql = "Update usuarios set NombreUsuario='0?, contraseña=?, nombre=?, sexo=?, edad=? where codigo=" + usuario.getCodigo() + ";";
+            String sql = "Update usuarios set NombreUsuario=?, contraseña=?, nombre=?, sexo=?, edad=? where codigo=" + usuario.getCodigo() + ";";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, usuario.getNombreUsuario());
             ps.setString(2, usuario.getContraseña());
@@ -82,22 +82,32 @@ public class UsuarioModelImpl implements IUsuarioModel {
 
     @Override
     public List<Usuario> ObtenerRegistros() {
-        List<Usuario> listaUsuario = null;
+        List<Usuario> lista = null;
         try {
-            ResultSet resulSet;
-            listaUsuario = new ArrayList<>();
+            ResultSet rs;
+            lista = new ArrayList<>();
             conexion = new Conexion();
             conexion.Conectar();
-
             connection = conexion.getConection();
-            String sql = "SELECT * FROM usuarios";
-            try ( PreparedStatement statement = connection.prepareStatement(sql)) {
-                resulSet = statement.executeQuery();
+            String sql = "select *from usuarios;";
+            try ( PreparedStatement ps = connection.prepareStatement(sql)) {
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    Usuario user = new Usuario();
+                    user.setCodigo(rs.getInt(1));
+                    user.setNombre(rs.getString(2));
+                    user.setSexo(rs.getString(3));
+                    user.setEdad(rs.getInt(4));
+                    user.setNombreUsuario(rs.getString(5));
+                    user.setContraseña(rs.getString(6));
+                    lista.add(user);
+                }
             }
+            conexion.desconectar();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return lista;
     }
 
     @Override
@@ -107,26 +117,31 @@ public class UsuarioModelImpl implements IUsuarioModel {
 
     public static void main(String[] args) {
 
-//        Usuario u = new Usuario();
+//        Usuario usr = new Usuario();
 //        u.setCodigo(2);
 //        u.setNombreUsuario("leoxis");
 //        u.setContraseña("0101");
 //        u.setNombre("Leonel");
 //        u.setSexo("Masculino");
 //        u.setEdad(20);
-//        UsuarioModelImpl m = new UsuarioModelImpl();
-//        m.crearRegistro(u);
-
-        
-        Usuario a = new Usuario();
-        a.setNombreUsuario("aaaaaaaa");
-        a.setContraseña("0101");
-        a.setNombre("Alex");
-        a.setSexo("Masculino");
-        a.setEdad(20);
-        a.setCodigo(1);
         UsuarioModelImpl m = new UsuarioModelImpl();
-        m.actualizarRegistro(a);
-        
-    }
+//        m.crearRegistro(u);
+//        Usuario a = new Usuario();
+//        a.setNombreUsuario("aaaaaaaa");
+//        a.setContraseña("0101");
+//        a.setNombre("Alex");
+//        a.setSexo("Masculino");
+//        a.setEdad(20);
+//        a.setCodigo(11);
+List<Usuario> lista = new ArrayList<Usuario>();
+        lista = m.ObtenerRegistros();
+        for (Usuario us : lista) {
+            System.out.println(us.getCodigo());
+            System.out.println(us.getNombre());
+            System.out.println(us.getSexo());
+            System.out.println(us.getEdad());
+            System.out.println(us.getNombreUsuario());
+            System.out.println(us.getContraseña());
+        }
+}
 }
